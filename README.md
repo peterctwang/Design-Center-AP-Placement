@@ -73,7 +73,9 @@ scripts\run.bat
 - 後端 API 與前端 UI 都掛在 **http://localhost:8000**
 - 瀏覽器會自動開啟首頁
 - API 文件（Swagger）在 **http://localhost:8000/docs**
-- 要停止伺服器：在終端機按 `Ctrl + C`
+- 要停止伺服器：在終端機按 `Ctrl + C`,或在另一個終端機跑停止腳本：
+  - Windows: `scripts\stop.bat`(可加 port: `scripts\stop.bat 8001`)
+  - Linux/macOS: `./scripts/stop.sh`(可加 port: `./scripts/stop.sh 8001`)
 
 ### 手動啟動（除錯用）
 ```bash
@@ -193,7 +195,8 @@ Design-Center-AP-Placement/
 ├── floor_plans/        # 5 張範例圖
 └── scripts/
     ├── setup.{sh,bat}
-    └── run.{sh,bat}
+    ├── run.{sh,bat}
+    └── stop.{sh,bat}
 ```
 
 ---
