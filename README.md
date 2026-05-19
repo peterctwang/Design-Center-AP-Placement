@@ -171,13 +171,30 @@ kill $(lsof -ti tcp:8000)
 
 #### 內建範例圖(`floor_plans/`)
 
-| 檔名 | 用途 |
-|------|------|
-| `apartment_12x9m.png` | 公寓 4 房 |
-| `sample_30x20m.png` | 基本辦公 |
-| `hotel_40x12m.png` | 旅館 14 房 |
-| `datacenter_40x25m.png` | 全金屬牆機房 |
-| `office_50x30m.png` | 開放辦公 + 機櫃 |
+5 張不同建築型態的測試圖,涵蓋從住宅到資料中心的常見場景：
+
+| 預覽 | 檔名 | 場景 | 主要材質 |
+|------|------|------|---------|
+| <img src="floor_plans/apartment_12x9m.png" width="160"> | [`apartment_12x9m.png`](floor_plans/apartment_12x9m.png) | 公寓 4 房(廚房 / 浴室 / 臥室 / 客廳) | concrete 外牆 + wood 內牆 + door/glass |
+| <img src="floor_plans/sample_30x20m.png" width="160"> | [`sample_30x20m.png`](floor_plans/sample_30x20m.png) | 基本辦公(入門測試用) | concrete + 簡單隔間 |
+| <img src="floor_plans/hotel_40x12m.png" width="160"> | [`hotel_40x12m.png`](floor_plans/hotel_40x12m.png) | 旅館長廊 14 房 | brick 房間隔牆,牆密度高 |
+| <img src="floor_plans/datacenter_40x25m.png" width="160"> | [`datacenter_40x25m.png`](floor_plans/datacenter_40x25m.png) | 機房(全金屬機櫃) | metal,訊號衰減極大 |
+| <img src="floor_plans/office_50x30m.png" width="160"> | [`office_50x30m.png`](floor_plans/office_50x30m.png) | 開放辦公 + 機櫃 | concrete + 部分 metal |
+
+##### 範例圖配色圖例(所有範例共用)
+
+| 顏色 | 代表元素 | 材質代碼 | RF 衰減 |
+|------|---------|---------|---------|
+| ⬛ 黑色粗線 | 外牆 | `concrete` | 高(~12 dB) |
+| 🟫 棕色 | 內牆 / 隔間 | `wood` | 中(~5 dB) |
+| 🟥 紅磚色 | 磚牆 | `brick` | 高(~8 dB) |
+| 🟦 青藍色 | 窗戶 | `glass` | 低(~2 dB) |
+| 🟩 綠色短條 | 門(含開合弧線) | `door` | 低(~3 dB) |
+| ⬜ 灰銀色 | 金屬牆 / 機櫃 | `metal` | 極高(~20 dB) |
+| 🟥 紅色 `2m` 標尺 | 比例參考(僅顯示用) | — | — |
+
+> OpenCV 牆體偵測會依顏色把每段牆分類到正確材質,GA 計算 RSSI 時自動套用對應衰減。
+> 想試自己的圖也建議照這套配色,辨識率最高。
 
 ### Step 3 — 自動辨識牆體
 1. 點側欄 **★ Auto Detect Walls**
