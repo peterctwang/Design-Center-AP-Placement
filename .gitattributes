@@ -1,0 +1,26 @@
+# Shell scripts must use LF on all platforms
+*.sh        text eol=lf
+*.bash      text eol=lf
+
+# Windows-only scripts
+*.bat       text eol=crlf
+*.cmd       text eol=crlf
+
+# Source code
+*.py        text eol=lf
+*.ts        text eol=lf
+*.tsx       text eol=lf
+*.js        text eol=lf
+*.jsx       text eol=lf
+*.json      text eol=lf
+*.css       text eol=lf
+*.html      text eol=lf
+*.md        text eol=lf
+*.yml       text eol=lf
+*.yaml      text eol=lf
+
+# Binary
+*.png       binary
+*.jpg       binary
+*.jpeg      binary
+*.pdf       binary

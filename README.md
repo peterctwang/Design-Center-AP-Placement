@@ -38,13 +38,22 @@ scripts\setup.bat
 ### macOS / Linux
 ```bash
 chmod +x scripts/*.sh
-./scripts/setup.sh
+./scripts/setup.sh          # 互動確認
+# 或一鍵全自動 (不問,直接裝):
+./scripts/setup.sh -y
 ```
 
 setup 腳本會依序：
-1. 在 `backend/venv` 建立 Python 虛擬環境並安裝 `requirements.txt`
-2. 在 `frontend/` 跑 `npm install` 與 `npm run build`
-3. 前端 build 結果輸出到 `backend/static/`，由 FastAPI 直接 serve
+1. **環境檢查** — 偵測 Python 3.11+ 與 Node 20+
+   - 已安裝 → 跳過,直接用現有版本
+   - 未安裝 → 依 distro 自動透過套件管理工具安裝
+     （支援 `apt` / `dnf` / `yum` / `pacman` / `zypper` / `brew`,需 sudo）
+2. 在 `backend/venv` 建立 Python 虛擬環境並安裝 `requirements.txt`
+3. 在 `frontend/` 跑 `npm install` 與 `npm run build`
+4. 前端 build 結果輸出到 `backend/static/`,由 FastAPI 直接 serve
+
+> **Ubuntu 22.04 注意**：預設 Python 是 3.10,腳本會自動加 `deadsnakes` PPA 來裝 3.11。
+> **沒有 sudo 權限的環境**：請事先請管理員裝好 Python 3.11+ 與 Node 20+,setup 偵測到就會直接跳過。
 
 ---
 
