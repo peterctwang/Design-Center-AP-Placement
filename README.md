@@ -73,9 +73,6 @@ scripts\run.bat
 - 後端 API 與前端 UI 都掛在 **http://localhost:8000**
 - 瀏覽器會自動開啟首頁
 - API 文件（Swagger）在 **http://localhost:8000/docs**
-- 要停止伺服器：在終端機按 `Ctrl + C`,或在另一個終端機跑停止腳本：
-  - Windows: `scripts\stop.bat`(可加 port: `scripts\stop.bat 8001`)
-  - Linux/macOS: `./scripts/stop.sh`(可加 port: `./scripts/stop.sh 8001`)
 
 ### 手動啟動（除錯用）
 ```bash
@@ -90,7 +87,53 @@ uvicorn app.main:app --port 8000 --reload
 
 ---
 
-## 四、介面操作教學
+## 四、停止系統
+
+有三種方式,選一個就好：
+
+### 方法 1 — Ctrl + C（最直覺）
+在跑 `run.bat` / `run.sh` 的終端機按 **`Ctrl + C`**,uvicorn 會優雅關閉(flush DB 連線)。
+
+### 方法 2 — 停止腳本（推薦,可在別的終端機跑）
+
+**Windows**
+```bat
+scripts\stop.bat              :: 殺 port 8000 (預設)
+scripts\stop.bat 8001         :: 指定其他 port
+```
+
+**macOS / Linux**
+```bash
+./scripts/stop.sh             # 殺 port 8000
+./scripts/stop.sh 8001        # 指定其他 port
+PORT=8001 ./scripts/stop.sh   # 用環境變數
+```
+
+腳本行為：
+| 平台 | 找 PID | 終止方式 |
+|------|--------|---------|
+| Windows | `netstat -ano \| findstr LISTENING` | `taskkill /F` |
+| Linux/macOS | `lsof` → `fuser` → `ss`（依序 fallback） | 先 `SIGTERM`,2 秒後殘留再 `SIGKILL` |
+
+沒人占用該 port 時會印提示後 exit 0,不會報錯。
+
+### 方法 3 — 手動殺 process
+
+**Windows**
+```powershell
+Get-NetTCPConnection -LocalPort 8000 | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }
+```
+
+**macOS / Linux**
+```bash
+kill $(lsof -ti tcp:8000)
+```
+
+> **備註**：SQLite 資料庫(`backend/data/app.db`)不會因為停止伺服器而被清掉,下次啟動原本的專案還在。
+
+---
+
+## 五、介面操作教學
 
 ### Step 1 — 建立新專案
 1. 進入首頁 `http://localhost:8000`
@@ -146,7 +189,7 @@ uvicorn app.main:app --port 8000 --reload
 
 ---
 
-## 五、跨機器移植
+## 六、跨機器移植
 
 不需要 Docker，整個資料夾打包即可：
 
@@ -169,7 +212,7 @@ tar xzf design-center-portable.tar.gz
 
 ---
 
-## 六、專案結構
+## 七、專案結構
 
 ```
 Design-Center-AP-Placement/
@@ -201,7 +244,7 @@ Design-Center-AP-Placement/
 
 ---
 
-## 七、API 概覽
+## 八、API 概覽
 
 完整互動文件：**http://localhost:8000/docs**
 
@@ -218,14 +261,14 @@ Design-Center-AP-Placement/
 
 ---
 
-## 八、技術棧
+## 九、技術棧
 
 **後端**：FastAPI · SQLAlchemy 2 · SQLite · BackgroundTasks · WebSocket · NumPy · OpenCV · DEAP · ReportLab
 **前端**：React 18 · TypeScript · Vite · React Router · Konva · Plotly · Tailwind · Zustand · Axios
 
 ---
 
-## 九、演算法說明
+## 十、演算法說明
 
 - **訊號模型**：室內 log-distance + 牆體穿透累積衰減
 - **路徑損耗指數**：n = 3.0（辦公室環境）
@@ -234,7 +277,7 @@ Design-Center-AP-Placement/
 
 ---
 
-## 十、常見問題
+## 十一、常見問題
 
 | 問題 | 解法 |
 |------|------|
