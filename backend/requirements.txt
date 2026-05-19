@@ -1,0 +1,28 @@
+# Web framework
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+python-multipart==0.0.9
+websockets==13.0
+aiofiles==24.1.0
+
+# ORM (lightweight, SQLite)
+sqlalchemy==2.0.35
+
+# Validation
+pydantic==2.9.2
+pydantic-settings==2.5.2
+
+# Algorithms (same versions as Desktop GUI)
+numpy>=1.21.0
+opencv-python-headless==4.10.0.84
+pillow>=10.0.0
+scikit-image>=0.18.0
+deap>=1.3.1
+matplotlib>=3.5.0
+
+# PDF reports
+reportlab==4.2.5
+
+# Misc
+python-dotenv==1.0.1
+loguru==0.7.2
