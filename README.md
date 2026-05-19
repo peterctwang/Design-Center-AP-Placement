@@ -237,7 +237,9 @@ Design-Center-AP-Placement/
 |------|------|
 | `python` 不認得 | 確認 Python 3.11+ 已加進 PATH，或改用 `py -3.11` |
 | `npm install` 卡住 | 換 registry：`npm config set registry https://registry.npmmirror.com` |
-| Port 8000 被占用 | 編輯 `scripts/run.bat` 改 `--port 8001` |
+| Port 8000 被占用 | Linux/macOS: `PORT=8001 ./scripts/run.sh`；Windows: 編輯 `scripts/run.bat` 改 `--port 8001` |
+| Linux 跑 `./scripts/setup.sh` 顯示 Permission denied | `chmod +x scripts/*.sh` 後再跑 |
+| 從 Windows clone 後 Linux 跑 `.sh` 報 `bad interpreter` | `.gitattributes` 已強制 LF,重新 clone 即可。已有的可用 `sed -i 's/\r$//' scripts/*.sh` |
 | 牆體辨識結果偏少 | 平面圖解析度建議 ≥ 1000px，線條越清楚越好 |
 | GA 跑很久 | 把 # APs 設小一點，或降 Generations |
 
